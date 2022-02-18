@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{6EE19DF3-8ED7-4C82-B891-3F15122C9F14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "ClassLibrary1\DataAccess.csproj", "{DAD2BB6B-97A2-4712-82B3-84C1EECBDAED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EE19DF3-8ED7-4C82-B891-3F15122C9F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EE19DF3-8ED7-4C82-B891-3F15122C9F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EE19DF3-8ED7-4C82-B891-3F15122C9F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EE19DF3-8ED7-4C82-B891-3F15122C9F14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAD2BB6B-97A2-4712-82B3-84C1EECBDAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAD2BB6B-97A2-4712-82B3-84C1EECBDAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAD2BB6B-97A2-4712-82B3-84C1EECBDAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAD2BB6B-97A2-4712-82B3-84C1EECBDAED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E9B91A9-3F1A-462A-8D2A-6BC21316CFD7}
+	EndGlobalSection
+EndGlobal

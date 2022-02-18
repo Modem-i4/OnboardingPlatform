@@ -1,0 +1,14 @@
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\bin\Debug\net5.0\DataAccess.deps.json
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\bin\Debug\net5.0\DataAccess.runtimeconfig.json
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\bin\Debug\net5.0\DataAccess.runtimeconfig.dev.json
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\bin\Debug\net5.0\DataAccess.dll
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\bin\Debug\net5.0\ref\DataAccess.dll
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\bin\Debug\net5.0\DataAccess.pdb
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.AssemblyInfoInputs.cache
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.AssemblyInfo.cs
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.dll
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\ref\DataAccess.dll
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.pdb
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.genruntimeconfig.cache
