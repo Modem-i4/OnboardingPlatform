@@ -34,27 +34,33 @@ namespace BusinessLogic.Services.Implementation
 
         public async Task<LoginViewModel> Login(LoginDto loginModel)
         {
-            var user = await userManager.FindByEmailAsync(loginModel.Login);
+            var user = await userManager.FindByEmailAsync(loginModel.Email);
 
-            if (user != null && await userManager.CheckPasswordAsync(user, loginModel.Password))
+            if (user != null)
             {
-
-                var claims = new List<Claim>
+                if(await userManager.CheckPasswordAsync(user, loginModel.Password))
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                };
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.UserName),
+                    };
 
-                var token = tokenService.GenerateJWT(claims);
-                await context.SaveChangesAsync();
-                return new LoginViewModel
+                    var token = tokenService.GenerateJWT(claims);
+                    return new LoginViewModel
+                    {
+                        Token = token,
+                    };
+                }
+                else
                 {
-                    Token = token,
-                };
+                    return null;
+                }
             }
             else
             {
                 return null;
+
             }
         }
 
