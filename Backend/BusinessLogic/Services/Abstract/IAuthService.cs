@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Dto.Auth;
+using BusinessLogic.Vm;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace BusinessLogic.Services.Abstract
 {
     public interface IAuthService
     {
+        Task<LoginViewModel> Login(LoginDto loginModel);
         Task<IdentityResult> Registration(RegistrationDto registationDto);
     }
 }

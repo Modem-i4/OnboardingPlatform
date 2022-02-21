@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace DataAccess.Models
 {
@@ -7,13 +8,14 @@ namespace DataAccess.Models
     {
         public User()
         {
-            RegistrationDate = DateTime.Now;
-           
+            RegistrationDate = DateTime.UtcNow;
         }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
         public DateTime RegistrationDate { get; set; }
+
+        public List<UserRefreshToken> UserRefreshTokens { get; set; }
     }
 }

@@ -12,3 +12,4 @@ D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAc
 D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\ref\DataAccess.dll
 D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.pdb
 D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.genruntimeconfig.cache
+D:\ProgramingShit\ProjectForMyLife\Backend\ClassLibrary1\obj\Debug\net5.0\DataAccess.csproj.AssemblyReference.cache
