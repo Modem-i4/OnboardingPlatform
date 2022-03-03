@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.Dto.Auth;
+using BusinessLogic.Vm;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,9 @@ namespace BusinessLogic.MapperProfilers
     {
         public MappingProfile()
         {
-            CreateMap<RegistrationDto, User>();            
+            CreateMap<RegistrationDto, User>();
+            CreateMap<LoginViewModel, UserRefreshToken>()
+                .ForSourceMember(login => login.Token, login => login.DoNotValidate());
         }
     }
 }

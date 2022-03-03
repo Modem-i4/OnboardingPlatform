@@ -36,26 +36,43 @@ namespace BusinessLogic.Services.Implementation
         {
             var user = await userManager.FindByEmailAsync(loginModel.Email);
 
-            if (user != null)
+            if (user != null && await userManager.CheckPasswordAsync(user, loginModel.Password))
             {
-                if(await userManager.CheckPasswordAsync(user, loginModel.Password))
-                {
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        new Claim(ClaimTypes.Name, user.UserName),
-                    };
 
-                    var token = tokenService.GenerateJWT(claims);
-                    return new LoginViewModel
-                    {
-                        Token = token,
-                    };
-                }
-                else
+                var claims = new List<Claim>
                 {
-                    return null;
+                  new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                  new Claim(ClaimTypes.Name, user.UserName),
+                };
+
+                var token = tokenService.GenerateJWT(claims);
+                var refreshToken = tokenService.GenerateRefreshToken();
+
+               
+                var loginViewModel = new LoginViewModel
+                {
+                    Token = token,
+                    RefreshToken = refreshToken,
+                    UserId = user.Id,
+                };
+
+
+                var newRefreshToken = mapper.Map<UserRefreshToken>(loginViewModel);
+
+                var users = context.UserRefreshTokens.First(u => u.UserId == loginViewModel.UserId);
+
+                if (users != null)
+                {
+                    context.UserRefreshTokens.Attach(users);
+                    context.UserRefreshTokens.Remove(users);
+                    await context.SaveChangesAsync();
                 }
+                await context.UserRefreshTokens.AddAsync(newRefreshToken);
+                await context.SaveChangesAsync();
+                
+
+                return loginViewModel;
+
             }
             else
             {

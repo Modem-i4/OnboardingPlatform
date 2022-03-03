@@ -10,6 +10,7 @@ namespace BusinessLogic.Services.Abstract
     public interface ITokenService
     {
         string GenerateJWT(IEnumerable<Claim> Claims);
-        
+        string GenerateRefreshToken();
+
     }
 }
