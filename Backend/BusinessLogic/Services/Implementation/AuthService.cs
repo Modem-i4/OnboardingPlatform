@@ -6,6 +6,7 @@ using DataAccess.DataContext;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,16 +39,17 @@ namespace BusinessLogic.Services.Implementation
 
             if (user != null && await userManager.CheckPasswordAsync(user, loginModel.Password))
             {
+                var userRoles = await userManager.GetRolesAsync(user);
 
                 var claims = new List<Claim>
                 {
                   new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                  new Claim(ClaimTypes.Role, userRoles.First()),
                   new Claim(ClaimTypes.Name, user.UserName),
                 };
 
                 var token = tokenService.GenerateJWT(claims);
                 var refreshToken = tokenService.GenerateRefreshToken();
-
                
                 var loginViewModel = new LoginViewModel
                 {
@@ -56,10 +58,9 @@ namespace BusinessLogic.Services.Implementation
                     UserId = user.Id,
                 };
 
-
                 var newRefreshToken = mapper.Map<UserRefreshToken>(loginViewModel);
 
-                var users = context.UserRefreshTokens.First(u => u.UserId == loginViewModel.UserId);
+                var users = await context.UserRefreshTokens.FirstOrDefaultAsync(u => u.UserId == user.Id);        
 
                 if (users != null)
                 {
@@ -69,7 +70,6 @@ namespace BusinessLogic.Services.Implementation
                 }
                 await context.UserRefreshTokens.AddAsync(newRefreshToken);
                 await context.SaveChangesAsync();
-                
 
                 return loginViewModel;
 
@@ -77,7 +77,6 @@ namespace BusinessLogic.Services.Implementation
             else
             {
                 return null;
-
             }
         }
 
@@ -86,6 +85,12 @@ namespace BusinessLogic.Services.Implementation
             var newUser = mapper.Map<User>(registerDto);
 
             var res = await userManager.CreateAsync(newUser, registerDto.Password);
+            
+            if(res != null)
+            {
+                await userManager.AddToRoleAsync(newUser, "user");
+            }
+            
             return res;
         }
     }
