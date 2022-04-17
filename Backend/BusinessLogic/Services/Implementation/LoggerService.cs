@@ -12,10 +12,24 @@ namespace BusinessLogic.Services.Implementation
     {
         private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
 
+        public void LogDebug(string message)
+        {
+            logger.Info(message);
+        }
+
+        public void LogError(string message)
+        {
+            logger.Info(message);
+        }
+
         public void LogInfo(string message)
         {
             logger.Info(message);
         }
 
+        public void LogWarn(string message)
+        {
+            logger.Info(message);
+        }
     }
 }

@@ -27,11 +27,11 @@ namespace API.Controllers
 
             if (response == null)
             {
-                loggerService.LogInfo("Invalid username or password");
+                loggerService.LogError("Invalid username or password");
                 return BadRequest("Invalid username or password");
             }
 
-            loggerService.LogInfo("User succesfuly logged in");
+            loggerService.LogInfo($"User: {response.UserId} succesfuly logged in");
             return Ok(response);
         }
 
@@ -42,9 +42,11 @@ namespace API.Controllers
 
             if (!createdUser.Succeeded)
             {
+                loggerService.LogError("Something went wrong");
                 return BadRequest(createdUser.Errors);
             }
 
+            loggerService.LogInfo($"Created new user!");
             return Ok("Congratulations, you are successfully registered on.");
         }
     }
