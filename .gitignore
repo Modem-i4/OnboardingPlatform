@@ -352,3 +352,9 @@ MigrationBackup/
 
 # Folder for logs 
 API/logs
+
+#Folder Migrations
+Backend/ClassLibrary1/Migrations
+
+#Debug Folder
+Backend/API/bin/Debug

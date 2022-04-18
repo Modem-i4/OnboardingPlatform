@@ -35,8 +35,8 @@ namespace BusinessLogic.Services.Implementation
 
         public async Task<LoginViewModel> Login(LoginDto loginModel)
         {
-            var user = await userManager.FindByEmailAsync(loginModel.Email);
-
+           var user = await userManager.FindByEmailAsync(loginModel.Email);
+           
             if (user != null && await userManager.CheckPasswordAsync(user, loginModel.Password))
             {
                 var userRoles = await userManager.GetRolesAsync(user);
@@ -88,7 +88,7 @@ namespace BusinessLogic.Services.Implementation
             
             if(res != null)
             {
-                await userManager.AddToRoleAsync(newUser, "user");
+                await userManager.AddToRoleAsync(newUser, "student");
             }
             
             return res;

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Models.Base;
+using System;
 
 namespace DataAccess.Models
 {
-    public class UserRefreshToken
+    public class UserRefreshToken: EntityBase
     {
-        public int Id { get; set; }
         public string RefreshToken { get; set; }
         public DateTime Expires { get; set; }
         public DateTime Created { get; set; }
