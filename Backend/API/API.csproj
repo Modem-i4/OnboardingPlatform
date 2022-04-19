@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\ClassLibrary1\DataAccess.csproj" />
+    <ProjectReference Include="..\Templates\Templates.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,9 +5,11 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{6EE19DF3-8ED7-4C82-B891-3F15122C9F14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "ClassLibrary1\DataAccess.csproj", "{DAD2BB6B-97A2-4712-82B3-84C1EECBDAED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "ClassLibrary1\DataAccess.csproj", "{DAD2BB6B-97A2-4712-82B3-84C1EECBDAED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates", "Templates\Templates.csproj", "{9DF3A1EF-7373-4FDD-9124-E0E581BA6A00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A56C3B44-AEA2-48BF-AE97-BFC8CACF4A16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DF3A1EF-7373-4FDD-9124-E0E581BA6A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DF3A1EF-7373-4FDD-9124-E0E581BA6A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DF3A1EF-7373-4FDD-9124-E0E581BA6A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DF3A1EF-7373-4FDD-9124-E0E581BA6A00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
