@@ -9,10 +9,12 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.14" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
+    <PackageReference Include="SendGrid" Version="9.27.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ClassLibrary1\DataAccess.csproj" />
+    <ProjectReference Include="..\Templates\Templates.csproj" />
   </ItemGroup>
 
 </Project>

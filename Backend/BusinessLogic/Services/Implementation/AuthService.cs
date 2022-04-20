@@ -7,12 +7,13 @@ using DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Templates;
+using Templates.ViewModels;
 
 namespace BusinessLogic.Services.Implementation
 {
@@ -22,14 +23,20 @@ namespace BusinessLogic.Services.Implementation
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
         private readonly ITokenService tokenService;
+        private readonly IRazorViewToStringRenderer razorViewToStringRenderer;
+        private readonly IEmailService emailService;
+        const string view = "Views/Emails/ConfirmAccountEmail";
 
         public AuthService(AppDBContext context, UserManager<User> userManager,
-             IMapper mapper, ITokenService tokenService)
+             IMapper mapper, ITokenService tokenService, IRazorViewToStringRenderer razorViewToStringRenderer,
+            IEmailService emailService)
         {
             this.context = context;
             this.mapper = mapper;
             this.userManager = userManager;
             this.tokenService = tokenService;
+            this.emailService = emailService;
+            this.razorViewToStringRenderer = razorViewToStringRenderer;
 
         }
 
@@ -86,9 +93,24 @@ namespace BusinessLogic.Services.Implementation
 
             var res = await userManager.CreateAsync(newUser, registerDto.Password);
             
-            if(res != null)
+            if(res.Succeeded)
             {
                 await userManager.AddToRoleAsync(newUser, "student");
+
+                var confirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+                
+                string confirmationLink = $"http://localhost:3000/confirmation/{newUser.Id}/{confirmationToken}";
+                
+                var confirmAccount = new ConfirmAccountEmailViewModel(confirmationLink);
+
+                var toAddresses = newUser.Email;
+
+                string body = await razorViewToStringRenderer.RenderViewToStringAsync($"{view}.cshtml", confirmAccount);
+
+                await emailService.SendEmailAsync(toAddresses,
+                    "Registration To The Course Project",
+                   body);
             }
             
             return res;

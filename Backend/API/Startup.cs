@@ -1,4 +1,5 @@
 
+using BusinessLogic.Dto.Auth;
 using BusinessLogic.Services.Abstract;
 using BusinessLogic.Services.Implementation;
 using DataAccess.DataContext;
@@ -15,13 +16,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+using Templates;
 
 namespace API
 {
@@ -43,10 +41,12 @@ namespace API
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                    x => x.MigrationsAssembly("DataAccess")));
 
-
+            services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ILoggerService, LoggerService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
 
             services.AddHttpClient();
