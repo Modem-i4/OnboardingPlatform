@@ -3,16 +3,13 @@ using BusinessLogic.Services.Abstract;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Services.Implementation
 {
     public class EmailService : IEmailService
     {
+        //Code:https://docs.microsoft.com/ru-ru/aspnet/core/security/authentication/accconfirm?view=aspnetcore-6.0&tabs=visual-studio
         public AuthMessageSenderOptions Options { get; }
 
         public EmailService(IOptions<AuthMessageSenderOptions> optionsAccessor)
@@ -30,10 +27,7 @@ namespace BusinessLogic.Services.Implementation
                 HtmlContent = message
 
             };
-            msg.AddTo(new EmailAddress(email));
-
-            // Disable click tracking.
-            // See See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
+            msg.AddTo(new EmailAddress(email)); 
             msg.SetClickTracking(false, false);
 
             return await client.SendEmailAsync(msg);

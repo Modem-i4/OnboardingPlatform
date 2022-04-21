@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Templates
 {
+    // Code: https://github.com/aspnet/Entropy/blob/master/samples/Mvc.RenderViewToString/RazorViewToStringRenderer.cs
     public class RazorViewToStringRenderer : IRazorViewToStringRenderer
     {
         private readonly IRazorViewEngine _viewEngine;
