@@ -115,5 +115,20 @@ namespace BusinessLogic.Services.Implementation
             
             return res;
         }
+
+        public async Task<IdentityResult> VerifyEmail(string userId, string token)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null || token == null)
+            {
+                return IdentityResult.Failed();
+            }
+
+            token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
+
+            var result = await userManager.ConfirmEmailAsync(user, token);
+            return result;
+        }
     }
 }

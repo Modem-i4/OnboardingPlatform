@@ -13,5 +13,6 @@ namespace BusinessLogic.Services.Abstract
     {
         Task<LoginViewModel> Login(LoginDto loginModel);
         Task<IdentityResult> Registration(RegistrationDto registationDto);
+        Task<IdentityResult> VerifyEmail(string idUser, string token);
     }
 }

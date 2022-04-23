@@ -2,6 +2,7 @@
 using BusinessLogic.Services.Abstract;
 using BusinessLogic.Vm;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -48,6 +49,19 @@ namespace API.Controllers
 
             loggerService.LogInfo($"Created new user!");
             return Ok("Congratulations, you are successfully registered on.");
+        }
+
+        [HttpGet("verifyEmail")]
+        public async Task<ActionResult<IdentityResult>> VerifyEmail(string userId, string token)
+        {
+            var response = await authService.VerifyEmail(userId, token);
+
+            if (!response.Succeeded)
+            {
+                loggerService.LogError("Something went wrong");
+                return BadRequest(response.Errors);
+            }
+            return Ok(response);
         }
     }
 }
