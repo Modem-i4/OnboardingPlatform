@@ -46,6 +46,16 @@ namespace BusinessLogic.Services.Implementation
            
             if (user != null && await userManager.CheckPasswordAsync(user, loginModel.Password))
             {
+                var emailConfirmationStatus = await userManager.IsEmailConfirmedAsync(user);
+
+                if (!emailConfirmationStatus)
+                {
+                    return new LoginViewModel
+                    {
+                        IsEmailConfirmed = false
+                    };
+                }
+
                 var userRoles = await userManager.GetRolesAsync(user);
 
                 var claims = new List<Claim>
@@ -63,6 +73,7 @@ namespace BusinessLogic.Services.Implementation
                     Token = token,
                     RefreshToken = refreshToken,
                     UserId = user.Id,
+                    IsEmailConfirmed = true
                 };
 
                 var newRefreshToken = mapper.Map<UserRefreshToken>(loginViewModel);
