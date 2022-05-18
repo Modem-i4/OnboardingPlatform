@@ -10,7 +10,8 @@ namespace DataAccess.DataContext
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
 
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
-
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseToUser> CoursesToUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(typeof(AppDBContext).Assembly);

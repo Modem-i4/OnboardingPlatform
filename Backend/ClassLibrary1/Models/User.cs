@@ -9,6 +9,7 @@ namespace DataAccess.Models
         public User()
         {
             RegistrationDate = DateTime.UtcNow;
+            CourseToUsers = new List<CourseToUser>();
         }
 
         public string FirstName { get; set; }
@@ -16,5 +17,6 @@ namespace DataAccess.Models
         public DateTime RegistrationDate { get; set; }
 
         public List<UserRefreshToken> UserRefreshTokens { get; set; }
+        public List<CourseToUser> CourseToUsers { get; set; }
     }
 }

@@ -33,10 +33,24 @@ namespace DataAccess.Configurations
                     RegistrationDate = DateTime.UtcNow,
                     EmailConfirmed = true
                 };
-                IdentityResult result = await userManager.CreateAsync(admin, password);
-                if (result.Succeeded)
+                User student = new User
+                {
+                    FirstName = "bogdan",
+                    LastName = "Kekovich",
+                    UserName = "Bogdanuch",
+                    Email = "oleksandr.khirov@oa.edu.ua",
+                    NormalizedEmail = "OLEKSANDR.KHIROV@OA.EDU.UA",
+                    RegistrationDate = DateTime.UtcNow,
+                    EmailConfirmed = true
+                };
+                
+                
+                var result = await userManager.CreateAsync(admin, password);
+                var resultStudent = await userManager.CreateAsync(student, password);
+                if (result.Succeeded && resultStudent.Succeeded)
                 {
                     await userManager.AddToRoleAsync(admin, "admin");
+                    await userManager.AddToRoleAsync(student, "student");
                 }
             }
         }
