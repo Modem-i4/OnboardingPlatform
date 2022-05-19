@@ -23,6 +23,22 @@ namespace DataAccess.Configurations
                 .WithMany(x => x.CourseToUsers)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasData(
+                new CourseToUser
+                {
+                    UserId = 2,
+                    CourseId = 1,
+                    StartDate = DateTime.UtcNow.AddDays(15),
+                    EndDate = DateTime.UtcNow.AddDays(30)
+                },
+                new CourseToUser
+                {
+                    UserId = 2,
+                    CourseId = 2,
+                    StartDate = DateTime.UtcNow.AddDays(15),
+                    EndDate = DateTime.UtcNow.AddDays(30)
+                });
         }
     }
 }
