@@ -10,6 +10,7 @@ namespace BusinessLogic.Services.Abstract
         Task<List<CourseViewModel>> GetAllCourses();
         Task<CourseViewModel> GetCourseById(int courseId);
         Task<SubscribeToCourseViewModel> SubscribeToCourse(SubscribeToCourseDto subscribeToCourseDto);
+        Task<bool> GetIsUserSubscribedToTheCourse(int courseId, int userId);
 
     }
 }

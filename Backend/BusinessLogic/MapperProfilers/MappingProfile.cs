@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using BusinessLogic.Dto.Auth;
+using BusinessLogic.Dto.Course;
 using BusinessLogic.Vm;
 using DataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.MapperProfilers
 {
@@ -15,8 +11,17 @@ namespace BusinessLogic.MapperProfilers
         public MappingProfile()
         {
             CreateMap<RegistrationDto, User>();
+
             CreateMap<LoginViewModel, UserRefreshToken>()
                 .ForSourceMember(login => login.Token, login => login.DoNotValidate());
+
+            CreateMap<Course, CourseViewModel>();
+
+            CreateMap<CourseToUser, SubscribeToCourseViewModel>();
+
+            CreateMap<SubscribeToCourseDto, CourseToUser>()
+               .ForMember(course => course.EndDate, opt => opt.MapFrom(course => course.StartDate.AddDays(14)));
+
         }
     }
 }
