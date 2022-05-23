@@ -11,6 +11,8 @@ namespace BusinessLogic.Services.Abstract
         Task<CourseViewModel> GetCourseById(int courseId);
         Task<SubscribeToCourseViewModel> SubscribeToCourse(SubscribeToCourseDto subscribeToCourseDto);
         Task<bool> GetIsUserSubscribedToTheCourse(int courseId, int userId);
+        Task<List<CourseToUserViewModel>> GetCoursesByUserId(int userId);
+        Task<List<CourseToUserViewModel>> GetCoursesByUserEmail(string email);
 
     }
 }

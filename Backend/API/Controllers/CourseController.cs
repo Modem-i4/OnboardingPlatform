@@ -63,5 +63,30 @@ namespace API.Controllers
 
             return Ok(response);
         }
+
+
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<ActionResult<List<CourseToUserViewModel>>> GetCoursesByUserId(int userId)
+        {
+            var response = await courseService.GetCoursesByUserId(userId);
+
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<ActionResult<List<CourseToUserViewModel>>> GetCoursesByStudentEmail(string email)
+        {
+            var courses = await courseService.GetCoursesByUserEmail(email);
+
+            if (courses != null)
+            {
+                loggerService.LogError("User is not found with this email");
+                return Ok(courses);
+            }
+
+            return BadRequest();
+        }
     }
 }

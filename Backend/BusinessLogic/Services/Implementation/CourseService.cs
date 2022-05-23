@@ -60,15 +60,37 @@ namespace BusinessLogic.Services.Implementation
                     .Include(user => user.User)
                     .FirstOrDefaultAsync(course => course.CourseId == courseToUser.CourseId && course.UserId == courseToUser.UserId);
 
-                var model = new SubscribeViewModel(courseToUser.Course.Name,
-                    courseToUser.User.UserName, courseToUser.StartDate.ToString("dd/MM/yyyy"),
-                    courseToUser.EndDate.ToString("dd/MM/yyyy"));
-
                 return mapper.Map<SubscribeToCourseViewModel>(courseToUser);
             }
             else return null;
         }
 
-       
+        public async Task<List<CourseToUserViewModel>> GetCoursesByUserId(int userId)
+        {
+            var courses = await context.CoursesToUsers
+                .Where(course => course.UserId == userId).OrderBy(course => course.StartDate)
+                .ProjectTo<CourseToUserViewModel>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return courses;
+        }
+
+        public async Task<List<CourseToUserViewModel>> GetCoursesByUserEmail(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                var courses = await context.CoursesToUsers
+                    .Where(users => users.UserId == user.Id).ProjectTo<CourseToUserViewModel>(mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+                return courses;
+            }
+            return null;
+        }
+
+        
+
+
     }
 }

@@ -22,6 +22,16 @@ namespace BusinessLogic.MapperProfilers
             CreateMap<SubscribeToCourseDto, CourseToUser>()
                .ForMember(course => course.EndDate, opt => opt.MapFrom(course => course.StartDate.AddDays(14)));
 
+            CreateMap<CourseToUser, CourseToUserViewModel>()
+                .ForMember(course => course.Id, opt => opt.MapFrom(course => course.Course.Id))
+                .ForMember(course => course.Name, opt => opt.MapFrom(course => course.Course.Name))
+                .ForMember(course => course.StartDate, opt => opt.MapFrom(course => course.StartDate.ToString("d")))
+                .ForMember(course => course.EndDate, opt => opt.MapFrom(course => course.EndDate.ToString("d")));
+
+            CreateMap<AddCourseDto, Course>()
+               .ForMember(course => course.Name, opt => opt.MapFrom(course => course.Name))
+               .ForMember(course => course.Description, opt => opt.MapFrom(course => course.Description))
+               .ForMember(course => course.ImgUrl, opt => opt.MapFrom(course => course.File));
         }
     }
 }
