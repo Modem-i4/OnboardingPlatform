@@ -1,0 +1,20 @@
+﻿@using Templates.ViewModels
+@model SubscribeViewModel
+
+@{
+    ViewData["EmailTitle"] = "Welcome To The Course";
+}
+
+    <p>
+        Registration to the course has been completed successfully.
+    </p>
+
+<br />
+
+@await Html.PartialAsync("SubscribeToCourse", new SubscribeViewModel(Model.CourseName, Model.UserName, Model.StartDate, Model.EndDate))
+
+<br />
+
+<p>
+    The Course Project
+</p>

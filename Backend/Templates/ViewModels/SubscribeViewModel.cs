@@ -1,5 +1,5 @@
 ﻿
-namespace BusinessLogic.Vm
+namespace Templates.ViewModels
 {
     public class SubscribeViewModel
     {

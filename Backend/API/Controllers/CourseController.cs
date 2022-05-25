@@ -88,5 +88,28 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult<CourseViewModel>> AddCourseByAdmin([FromForm] AddCourseDto addCourse)
+        {
+            var result = await courseService.AddCourseByAdmin(addCourse);
+
+            if (result == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<bool> DeleteCourseByIdForUser(int courseId, int userId)
+        {
+            var result = await courseService.DeleteCourseByIdForUser(courseId, userId);
+
+            if(!result) return false;
+
+            return result;
+        }
     }
 }

@@ -5,11 +5,16 @@ using BusinessLogic.Services.Abstract;
 using BusinessLogic.Vm;
 using DataAccess.DataContext;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Templates;
+using Templates.ViewModels;
 
 namespace BusinessLogic.Services.Implementation
 {
@@ -18,12 +23,20 @@ namespace BusinessLogic.Services.Implementation
         private readonly AppDBContext context;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
+        private readonly IRazorViewToStringRenderer renderer;
+        const string view = "Views/Emails/SubscribeToCourse";
+        private readonly IEmailService emailService;
+        private readonly IWebHostEnvironment host;
 
-        public CourseService(AppDBContext context, IMapper mapper, UserManager<User> userManager)
+        public CourseService(AppDBContext context, IMapper mapper, UserManager<User> userManager, 
+            IRazorViewToStringRenderer renderer, IEmailService emailService, IWebHostEnvironment host)
         {
             this.context = context;
             this.mapper = mapper;
             this.userManager = userManager;
+            this.renderer = renderer;
+            this.emailService = emailService;
+            this.host = host;
         }
 
         public async Task<List<CourseViewModel>> GetAllCourses()
@@ -60,6 +73,14 @@ namespace BusinessLogic.Services.Implementation
                     .Include(user => user.User)
                     .FirstOrDefaultAsync(course => course.CourseId == courseToUser.CourseId && course.UserId == courseToUser.UserId);
 
+                var model = new SubscribeViewModel(courseToUser.Course.Name,
+                    courseToUser.User.UserName, courseToUser.StartDate.ToString("dd/MM/yyyy"),
+                    courseToUser.EndDate.ToString("dd/MM/yyyy"));
+
+                var body = await renderer.RenderViewToStringAsync($"{view}.cshtml", model);
+
+                await emailService.SendEmailAsync(courseToUser.User.Email, "Registration To The Course", body);
+
                 return mapper.Map<SubscribeToCourseViewModel>(courseToUser);
             }
             else return null;
@@ -89,8 +110,47 @@ namespace BusinessLogic.Services.Implementation
             return null;
         }
 
-        
 
+        public async Task<CourseViewModel> AddCourseByAdmin(AddCourseDto addCourse)
+        {
+            var newCourse = mapper.Map<Course>(addCourse);
+            if (addCourse.File != null)
+            {
+                var photoFolderPath = Path.Combine(host.WebRootPath, "Images");
+                if (!Directory.Exists(photoFolderPath))
+                {
+                    Directory.CreateDirectory(photoFolderPath);
+                }
 
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(addCourse.File.FileName);
+
+                var filePath = Path.Combine(photoFolderPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await addCourse.File.CopyToAsync(stream);
+                }
+
+                newCourse.ImgUrl = fileName;
+
+                await context.Courses.AddAsync(newCourse);
+                await context.SaveChangesAsync();
+
+                return mapper.Map<CourseViewModel>(newCourse);
+            }
+            else return null;
+        }
+
+        public async Task<bool> DeleteCourseByIdForUser(int courseId, int userId)
+        {
+            if (await GetIsUserSubscribedToTheCourse(courseId, userId))
+            {
+                var course = await context.CoursesToUsers.FirstOrDefaultAsync(x => x.CourseId == courseId && x.UserId == userId);
+                context.CoursesToUsers.Remove(course);
+                await context.SaveChangesAsync();
+                return true;
+
+            }
+            else return false;
+        }
     }
 }

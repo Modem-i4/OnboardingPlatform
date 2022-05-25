@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Dto.Course;
 using BusinessLogic.Vm;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace BusinessLogic.Services.Abstract
         Task<bool> GetIsUserSubscribedToTheCourse(int courseId, int userId);
         Task<List<CourseToUserViewModel>> GetCoursesByUserId(int userId);
         Task<List<CourseToUserViewModel>> GetCoursesByUserEmail(string email);
-
+        Task<CourseViewModel> AddCourseByAdmin(AddCourseDto addCourse);
+        Task<bool> DeleteCourseByIdForUser(int courseId, int userId);
     }
 }
