@@ -360,4 +360,4 @@ Backend/ClassLibrary1/Migrations
 Backend/API/bin/Debug
 
 #Image Folder for Courses
-Backend/API/Images
+Backend/API/wwwroot/Images
