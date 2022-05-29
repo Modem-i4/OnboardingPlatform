@@ -4,13 +4,14 @@ using BusinessLogic.Vm;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using DataAccess.DataContext;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : Controller
     {
         private readonly IAuthService authService;
         private readonly ILoggerService loggerService;
@@ -21,9 +22,17 @@ namespace API.Controllers
             this.loggerService = loggerService;
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<LoginViewModel>> Login([FromBody] LoginDto loginViewModel)
+        public IActionResult Login()
         {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<LoginViewModel>> Login(LoginDto loginViewModel)
+        {
+            if (loginViewModel == null) return View();
+
             var response = await authService.Login(loginViewModel);
 
             if (response == null)
@@ -36,8 +45,14 @@ namespace API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("registration")]
-        public async Task<ActionResult<RegistrationDto>> Registration([FromBody] RegistrationDto user)
+        public IActionResult Registration()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Registration([Bind("Email,Password,FirstName,LastName,Username")]  RegistrationDto user)
         {
             var createdUser = await authService.Registration(user);
 
@@ -48,10 +63,10 @@ namespace API.Controllers
             }
 
             loggerService.LogInfo($"Created new user!");
-            return Ok("Congratulations, you are successfully registered on.");
+            return RedirectToAction("SuccessfullyRegistered", "auth");
         }
 
-        [HttpGet("verifyEmail")]
+        [HttpGet]
         public async Task<ActionResult<IdentityResult>> VerifyEmail(string userId, string token)
         {
             var response = await authService.VerifyEmail(userId, token);
@@ -61,7 +76,18 @@ namespace API.Controllers
                 loggerService.LogError("Something went wrong");
                 return BadRequest(response.Errors);
             }
-            return Ok(response);
+            return View();
         }
+        
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult SuccessfullyRegistered()
+        {
+            return View();
+        }
+
     }
 }

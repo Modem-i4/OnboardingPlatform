@@ -111,7 +111,7 @@ namespace BusinessLogic.Services.Implementation
                 var confirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
                 confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
                 
-                string confirmationLink = $"http://localhost:3000/confirmation/{newUser.Id}/{confirmationToken}";
+                string confirmationLink = $"https://localhost:44308/auth/VerifyEmail?userId={newUser.Id}&token={confirmationToken}";
                 
                 var confirmAccount = new ConfirmAccountEmailViewModel(confirmationLink);
 

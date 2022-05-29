@@ -66,7 +66,7 @@ namespace API.Controllers
 
 
         [HttpGet("[action]")]
-        [Authorize]
+        [Authorize(Roles = "student")]
         public async Task<ActionResult<List<CourseToUserViewModel>>> GetCoursesByUserId(int userId)
         {
             var response = await courseService.GetCoursesByUserId(userId);
@@ -75,7 +75,7 @@ namespace API.Controllers
         }
 
         [HttpGet("[action]")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<List<CourseToUserViewModel>>> GetCoursesByStudentEmail(string email)
         {
             var courses = await courseService.GetCoursesByUserEmail(email);
@@ -90,6 +90,7 @@ namespace API.Controllers
         }
 
         [HttpPost("[action]")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<CourseViewModel>> AddCourseByAdmin([FromForm] AddCourseDto addCourse)
         {
             var result = await courseService.AddCourseByAdmin(addCourse);
@@ -103,6 +104,7 @@ namespace API.Controllers
         }
 
         [HttpPost("[action]")]
+        [Authorize(Roles = "student")]
         public async Task<bool> DeleteCourseByIdForUser(int courseId, int userId)
         {
             var result = await courseService.DeleteCourseByIdForUser(courseId, userId);

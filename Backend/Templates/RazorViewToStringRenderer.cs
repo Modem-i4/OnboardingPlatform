@@ -20,18 +20,20 @@ namespace Templates
         private readonly IRazorViewEngine _viewEngine;
         private readonly ITempDataProvider _tempDataProvider;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         public RazorViewToStringRenderer(IRazorViewEngine viewEngine, ITempDataProvider tempDataProvider,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider, IHttpContextAccessor contextAccessor)
         {
             _viewEngine = viewEngine;
             _tempDataProvider = tempDataProvider;
             _serviceProvider = serviceProvider;
+            _contextAccessor = contextAccessor;
         }
 
         public async Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model)
         {
-            var actionContext = GetActionContext();
+            var actionContext = new ActionContext(_contextAccessor.HttpContext, _contextAccessor.HttpContext.GetRouteData(), new ActionDescriptor());
             var view = FindView(actionContext, viewName);
 
             using (var output = new StringWriter())
@@ -73,12 +75,6 @@ namespace Templates
               new[] { $"Unable to find view '{viewName}'. The following locations were searched:" }.Concat(searchedLocations));
 
             throw new InvalidOperationException(errorMessage);
-        }
-
-        private ActionContext GetActionContext()
-        {
-            var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
-            return new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
         }
     }
 }

@@ -50,6 +50,7 @@ namespace API
             services.AddTransient<ILoggerService, LoggerService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
 
@@ -71,7 +72,6 @@ namespace API
                 options.SignIn.RequireConfirmedEmail = true;
             });
 
-            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
@@ -117,7 +117,7 @@ namespace API
                 };
             });
 
-            services.AddRazorPages();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -152,8 +152,10 @@ namespace API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-            });
+                endpoints.MapControllerRoute(
+                     name: "default",
+                     pattern: "{controller=auth}/{action=index}/{id?}");
+            }); 
         }
     }
 }

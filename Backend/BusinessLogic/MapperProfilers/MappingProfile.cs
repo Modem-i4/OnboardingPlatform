@@ -32,6 +32,7 @@ namespace BusinessLogic.MapperProfilers
                .ForMember(course => course.Name, opt => opt.MapFrom(course => course.Name))
                .ForMember(course => course.Description, opt => opt.MapFrom(course => course.Description))
                .ForMember(course => course.ImgUrl, opt => opt.MapFrom(course => course.File));
+
         }
     }
 }
