@@ -50,7 +50,6 @@ namespace API
             services.AddTransient<ILoggerService, LoggerService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ICourseService, CourseService>();
-            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
 
